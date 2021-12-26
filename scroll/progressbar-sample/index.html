@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scroll Sample</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style>
+      body {
+        overflow-x: hidden;
+        background: linear-gradient(150deg, #ec6d22, #00aeff, #5b4c8c, #ffe793, #00a65f, black);
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+      body::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+      }
+      h1 {
+        color: #eee;
+      }
+
+      /* 그래프 */
+      .progress {
+        position: fixed;
+        width: 4px;
+        height: 140px;
+        top: 40%;
+        left: 20px;
+        background-color: #282828;
+        z-index: 10;
+      }
+      .bar {
+        position: absolute;
+        width: 4px;
+        height: 0;
+        top: 0;
+        left: 0;
+        background: #00a65f;
+        z-index: 11;
+        transition: all 0.3s ease;
+      }
+
+      /* 본문 */
+      section {
+        position: relative;
+        width: 500px;
+        background-color: #28282886;
+        margin: 30px auto;
+        padding: 10px 20px;
+        z-index: 100;
+      }
+      p {
+        color: #eee;
+        font-size: 20px;
+      }
+
+      /* 구름 */
+      .cloudWrap {
+        position: fixed;
+      }
+      .cloudWrap.cloud2 {
+        position: fixed;
+        top: -200px;
+        left: 700px;
+        z-index: 1000;
+      }
+
+      .cloudWrap img {
+        position: absolute;
+        width: 400px;
+        top: 0;
+        left: 0;
+        opacity: 0.5;
+      }
+
+      /* 구름 각각 위치 잡아주기 */
+      .cloudWrap img:nth-child(1) {
+        top: -100px;
+        left: 500px;
+      }
+      .cloudWrap img:nth-child(2) {
+        top: 800px;
+        left: 0px;
+      }
+      .cloudWrap img:nth-child(3) {
+        top: 1800px;
+        left: 400px;
+      }
+      .cloudWrap img:nth-child(4) {
+        top: 3000px;
+        left: -100px;
+      }
+      .cloudWrap img:nth-child(5) {
+        top: 4200px;
+        left: 500px;
+      }
+      .cloudWrap img:nth-child(6) {
+        top: 5900px;
+        left: -140px;
+      }
+      .cloudWrap img:nth-child(7) {
+        top: 7000px;
+        left: 500px;
+      }
+      .cloudWrap img:nth-child(8) {
+        top: 8000px;
+        left: -190px;
+      }
+      .cloudWrap img:nth-child(9) {
+        top: 9500px;
+        left: 600px;
+      }
+    </style>
+    <script>
+      let scrollTop = 0;
+      let bar;
+      let cloudWrap;
+      let cloudWrap2;
+
+      window.onload = function () {
+        bar = document.getElementsByClassName('bar')[0];
+        cloudWrap = document.getElementsByClassName('cloudWrap')[0]; //구름레이어1
+        cloudWrap2 = document.getElementsByClassName('cloudWrap')[1]; //구름 레이어2
+        //2개의 레이어를 따로 움직여봅니다.
+      };
+
+      window.addEventListener(
+        'scroll',
+        (e) => {
+          scrollTop = document.documentElement.scrollTop;
+          let per = Math.ceil(
+            (scrollTop / (document.body.offsetHeight - window.innerHeight)) * 100
+          );
+          //window.outerHeight <- 브라우저 전체 높이(검색창 포함)
+          //window.innerHeight <- 브라우저 안쪽 높이(실제 컨텐츠 영역)
+
+          bar.style.height = `${per}%`;
+
+          cloudWrap.style.transform = `translate(0, ${-scrollTop / 2}px)`;
+          cloudWrap2.style.transform = `translate(0, ${-scrollTop / 1.4}px)`;
+        },
+        false
+      );
+    </script>
+  </head>
+  <body>
+    <div class="progress">
+      <span class="bar"></span>
+    </div>
+    <div class="cloudWrap">
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+    </div>
+    <div class="cloudWrap cloud2">
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+      <img src="./cloud.png" alt="구름" />
+    </div>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a blandit dui. Mauris venenatis
+        varius pulvinar. In mattis, odio a sodales pretium, odio lacus egestas mauris, vel blandit
+        ligula mi nec erat. Fusce ac sagittis magna. Donec eu cursus metus, at consectetur magna.
+        Etiam vel pulvinar odio. Curabitur maximus dignissim tincidunt. Maecenas posuere maximus
+        odio, vel volutpat ex. Vivamus fringilla gravida neque, eget scelerisque lacus ornare id.
+        Morbi ac elit non tellus lacinia finibus. In vitae enim dui. Vestibulum sed lectus ultricies
+        sem imperdiet ultricies.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Nulla nec malesuada sem. Aenean venenatis enim vitae aliquam euismod. Nunc turpis enim,
+        accumsan sit amet nisi vel, dapibus vulputate felis. Sed fringilla lacus ligula. Duis
+        sagittis mi vel quam dictum, vel facilisis dolor lobortis. Fusce a consequat massa. Sed
+        dignissim leo pellentesque, sagittis enim vel, porta dui. Ut augue arcu, sodales eu pulvinar
+        vitae, commodo a eros. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Morbi at ornare erat. Mauris lobortis nibh id lorem vehicula
+        egestas. Phasellus quis consequat nunc. Ut imperdiet ornare massa a vestibulum.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Suspendisse eget eros faucibus justo feugiat commodo. Aenean volutpat justo vitae nulla
+        congue varius. Sed libero lacus, rutrum sit amet lobortis in, mollis at ipsum. Pellentesque
+        mauris nunc, viverra sed vehicula vitae, interdum sed elit. Proin tempor mi a odio
+        condimentum, eu convallis velit tincidunt. Phasellus interdum urna at ligula iaculis, et
+        suscipit nulla efficitur. In eu turpis massa. Aliquam placerat ligula vel justo varius, sed
+        iaculis enim lobortis. Etiam facilisis, felis quis pretium venenatis, lacus eros hendrerit
+        eros, ac pellentesque magna massa aliquet arcu. Nulla sit amet consequat dui, non sagittis
+        augue. Sed faucibus efficitur aliquet. Nullam euismod arcu quis dolor dictum auctor.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Cras feugiat pharetra posuere. Maecenas non purus ac odio cursus malesuada. Praesent dapibus
+        nulla et scelerisque luctus. Duis varius dolor nunc, eget rutrum neque elementum ut. Donec
+        ac dolor nisl. Ut sollicitudin leo ante, ac tristique massa auctor sit amet. Praesent
+        faucibus neque sed erat luctus, nec elementum velit fringilla. Curabitur volutpat odio
+        dolor, vitae auctor neque pharetra sed. Phasellus ultrices consectetur quam ac consectetur.
+        In convallis in mauris et tristique. Nam vestibulum nibh vel ipsum aliquet ultrices. Fusce
+        ultrices lectus eu augue posuere elementum. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p></p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Aliquam mollis nisi non arcu ullamcorper cursus. Suspendisse in ullamcorper ex. Ut fringilla
+        mauris sit amet est interdum, id ultrices elit accumsan. Mauris pharetra lacus id nunc
+        suscipit, id auctor diam lacinia. Donec ac porttitor elit. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Nullam eros lacus, tempor vitae
+        euismod at, varius ut eros.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Curabitur dignissim sem id risus rhoncus, ut facilisis lectus consectetur. Vestibulum sit
+        amet nunc vitae elit dignissim dictum. Maecenas pulvinar mi felis, et vulputate elit varius
+        vel. Ut pellentesque ante est, quis malesuada nisi aliquam et. Phasellus non nisl non dui
+        consequat porttitor in lobortis lacus. Etiam eleifend hendrerit felis. Integer tristique nec
+        quam viverra ornare. Donec interdum ex velit, eget vulputate felis consectetur ut.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Donec ornare velit at malesuada dictum. Nam vel felis malesuada, congue ex in, mollis augue.
+        Nunc consequat mattis urna vel interdum. Nulla in dui vel arcu consectetur convallis. Proin
+        vestibulum metus augue, at sodales quam bibendum et. Nam sed facilisis augue. Vivamus
+        consequat ligula vel nunc malesuada interdum. Ut molestie pharetra tortor, nec porta ligula
+        eleifend et. Sed varius rutrum dapibus.
+      </p>
+    </section>
+    <section>
+      <h1>TITLE</h1>
+      <p>
+        Praesent eleifend mattis tincidunt. Pellentesque volutpat ultrices arcu, sit amet laoreet
+        elit euismod vel. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras id odio
+        interdum, egestas velit ut, lobortis nulla. Suspendisse condimentum id erat eu maximus.
+        Suspendisse eu nisl rutrum, tincidunt lorem sit amet, aliquet quam. In hac habitasse platea
+        dictumst. Praesent finibus urna sit amet purus gravida vehicula. Duis elementum placerat
+        libero, ac auctor risus vulputate quis. Sed arcu purus, molestie vitae blandit sed, euismod
+        et lorem. Cras pretium ut quam a mattis. Mauris id fringilla justo, ornare eleifend velit.
+        Curabitur ut felis id mi auctor posuere ut quis urna.
+      </p>
+    </section>
+  </body>
+</html>
