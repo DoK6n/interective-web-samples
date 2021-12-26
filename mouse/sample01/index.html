@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FIX NOTHING sample</title>
+    <style>
+      body {
+        position: relative;
+        background-color: #282828;
+        /* cursor: none; */
+        overflow: hidden;
+      }
+      h1 {
+        color: #fff;
+      }
+      .model {
+        position: absolute;
+        width: 220px;
+        left: calc(50% - 150px);
+        
+      }
+      .bg {
+        position: absolute;
+        width: 800px;
+        left: calc(50% - 300px);
+      }
+      .pipe {
+        position: absolute;
+        width: 350px;
+        top: 130px;
+        left: -60px;
+
+      }
+    </style>
+    <script>
+      let model;
+      let bg;
+      let h1;
+
+      let x = 0;
+      let y = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+      let speed = 0.009;
+
+      // 화면이 로드된 후 실행
+      window.onload = function () {
+        h1 = document.getElementsByTagName('h1')[0];
+        model = document.getElementsByClassName('model')[0];
+        bg = document.getElementsByClassName('bg')[0];
+        pipe = document.getElementsByClassName('pipe')[0];
+
+        window.addEventListener('mousemove', mouseFunc, false);
+
+        function mouseFunc(e) {
+          // 좌표값 = 현재 마우스의 좌표값 - 화면의 절반
+          // 브라우저의 마우스 좌표(0,0) 기준을 좌측 상단이 아닌, 가운데로 중심점을 바꿈
+          x = e.clientX - window.innerWidth / 2;
+          y = e.clientY - window.innerHeight / 2;
+        }
+        loop();
+      };
+      function loop() {
+        // 현재 x값에서 움직여야 할 x값만큼 뺀 후 speed만큼 곱한 값만큼 계속 더해서 translate로 움직이게 만드는 원리
+        mouseX += (x - mouseX) * speed;
+        mouseY += (y - mouseY) * speed;
+        
+        h1.innerHTML = `x: ${mouseX.toFixed(2)}, y: ${mouseY.toFixed(2)}`;
+        model.style.transform = `translate(${-mouseX/6}px, ${-mouseY/6}px)`;
+        bg.style.transform = `translate(${mouseX/6}px, ${mouseY/6}px)`;
+        pipe.style.transform = `translate(${mouseX/6}px, ${mouseY/6}px)`;
+
+        window.requestAnimationFrame(loop); // 재귀
+      }
+    </script>
+  </head>
+  <body>
+    <h1>test</h1>
+    <img class="bg" src="./assets/layer-1.jpg" alt="bg" />
+    <img class="model" src="./assets/layer-7.png" alt="model" />
+    <img class="pipe" src="./assets/layer-9.png" alt="pipe" />
+  </body>
+</html>

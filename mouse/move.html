@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mouse move</title>
+    <style>
+      body {
+        position: relative;
+        background-color: #282828;
+        cursor: none;
+      }
+      h1 {
+        color: #fff;
+      }
+      .cursor_item {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: #3b315a;
+        top: 0;
+        left: 0;
+      }
+    </style>
+    <script>
+      let cursor_item;
+      let x = 0;
+      let y = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+      let speed = 0.04;
+
+      // 화면이 로드된 후 실행
+      window.onload = function () {
+        h1 = document.getElementsByTagName('h1')[0];
+        cursor_item = document.getElementsByClassName('cursor_item')[0];
+        window.addEventListener('mousemove', mouseFunc, false);
+
+        function mouseFunc(e) {
+          // 현재 마우스의 위치값
+          x = e.clientX;
+          y = e.clientY;
+        }
+        loop();
+      };
+      function loop() {
+        // 현재 x값에서 움직여야 할 x값만큼 뺀 후 speed만큼 곱한 값만큼 계속 더해서 translate로 움직이게 만드는 원리
+        mouseX += (x - mouseX) * speed;
+        mouseY += (y - mouseY) * speed;
+        h1.innerHTML = `x: ${mouseX.toFixed(2)}, y: ${mouseY.toFixed(2)}`;
+
+        cursor_item.style.transform = `translate(${mouseX}px, ${mouseY}px)`;  // 움직일 마우스의 위치값
+        window.requestAnimationFrame(loop); // 재귀
+      }
+    </script>
+  </head>
+  <body>
+    <h1>test</h1>
+    <div class="cursor_item"></div>
+  </body>
+</html>
