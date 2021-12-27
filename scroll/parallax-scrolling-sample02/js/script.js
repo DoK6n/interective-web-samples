@@ -23,11 +23,18 @@ window.onload = function () {
   parallax_4 = document.getElementById('parallax_4');
   parallax_5 = document.getElementById('parallax_5');
 
+  window.addEventListener('resize', stageResize, false);
   window.addEventListener('mousemove', mouseMove, false);
   window.addEventListener('scroll', scrollFunc, false);
 
+  stageResize();
   loop();
 };
+
+function stageResize() {
+  _documentHum = document.body.offsetHeight;
+  _windowHNum = window.outerHeight;
+}
 
 function scrollFunc(e) {
   scrollTop = document.documentElement.scrollTop;
